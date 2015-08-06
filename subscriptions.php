@@ -17,9 +17,11 @@ else {
 if ( !empty( $_REQUEST['id']  ) ) {
   $sub_id = (int) $_REQUEST['id'];
 }
-else {
+else { 
   $method = 'create';
 }
+
+
 
 switch ($method) {
   case 'get' :
@@ -28,7 +30,9 @@ switch ($method) {
     break;
   case 'create' :
     $goto = subscription::new_instance( $_REQUEST['plan'],$_REQUEST['user'],$_REQUEST['balance'],$_REQUEST['status'],$_REQUEST['pmt_schedule'] );
-    header('Location: sub/'+$goto);
+    echo json_encode(subscription::get_instance( $goto ), JSON_PRETTY_PRINT);
+    header('Location: ./sub/'.$goto);
+    exit;
     break;
   default:
     break;

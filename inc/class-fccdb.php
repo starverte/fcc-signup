@@ -66,9 +66,15 @@ class fccdb {
       }
       while ($query->nextRowset());
 
-      $conn = null;
-
-      return $results;
+      if (empty($results)) {
+        $insertID = $conn->lastInsertId();
+        $conn = null;
+        return $insertID;
+      }
+      else {
+        $conn = null;
+        return $results;
+      }
     }
     catch (PDOException $e) {
       $conn = null;

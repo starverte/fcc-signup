@@ -154,15 +154,14 @@ class subscription {
   public static function new_instance( $sub_plan,$sub_user,$sub_balance,$sub_status,$sub_pmt_schedule ) {
     global $fccdb;
 
-    $sub_plan = !empty($sub_plan) ? floatval($sub_plan) : '1';
+    $sub_plan = !empty($sub_plan) ? floatval($sub_plan) : '5';
     $sub_user = !empty($sub_user) ? floatval($sub_user) : '1';
     $sub_date_created = date('Y-m-d H:i:s');
     $sub_balance = !empty($sub_balance) ? floatval($sub_balance) : '1';
     $sub_status = _text($sub_status, 32);
-    $sub_pmt_schedule = _text($sub_status, 32);
+    $sub_pmt_schedule = _text($sub_pmt_schedule, 32);
 
-    $fccdb->insert('subscriptions', 'sub_plan,sub_user,sub_date_created,sub_balance,sub_status,sub_pmt_schedule', "$sub_plan,$sub_user,NOW(),$sub_balance,'$sub_status','$sub_pmt_schedule'" );
-    return PDO::lastInsertId();
+    return $fccdb->insert('subscriptions', 'sub_plan,sub_user,sub_date_created,sub_balance,sub_status,sub_pmt_schedule', "$sub_plan,$sub_user,NOW(),$sub_balance,'$sub_status','$sub_pmt_schedule'" );
   }
 
   /**
