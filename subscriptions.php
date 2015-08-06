@@ -10,6 +10,7 @@ $fccdb = new fccdb;
 
 if ( !empty( $_REQUEST['method']  ) ) {
   $method = _method( $_REQUEST['method']);
+  echo $method;
 }
 else {
   $method = 'get';
@@ -33,6 +34,11 @@ switch ($method) {
     echo json_encode(subscription::get_instance( $goto ), JSON_PRETTY_PRINT);
     header('Location: ./sub/'.$goto);
     exit;
+    break;
+  case 'delete':
+    echo "trying to delete";
+    $fccdb->delete('subscriptions',$sub_id);
+    echo "Sub #$sub_id deleted.";
     break;
   default:
     break;
