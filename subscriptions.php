@@ -13,12 +13,15 @@ if ( !empty( $_REQUEST['method']  ) ) {
 }
 else {
   $method = 'get';
+  if (!empty($_REQUEST['plan']) || !empty($_REQUEST['user']) || !empty($_REQUEST['balance']) || !empty($_REQUEST['status']) || !empty($_REQUEST['pmt_schedule'])) {
+    $method = 'set';
+  }
 }
 if ( !empty( $_REQUEST['id']  ) ) {
   $sub_id = (int) $_REQUEST['id'];
 }
 else { 
-  $method = 'set';
+  $method = 'new';
 }
 
 switch ($method) {
@@ -27,13 +30,16 @@ switch ($method) {
     echo json_encode($sub, JSON_PRETTY_PRINT);
     break;
   case 'set' :
+    subscription::set_instance($sub_id, $_REQUEST['plan'],$_REQUEST['user'],$_REQUEST['balance'],$_REQUEST['status'],$_REQUEST['pmt_schedule']);
+    echo json_encode(subscription::get_instance( $sub_id ), JSON_PRETTY_PRINT);
+    break;
+  case 'new' :
     $goto = subscription::new_instance( $_REQUEST['plan'],$_REQUEST['user'],$_REQUEST['balance'],$_REQUEST['status'],$_REQUEST['pmt_schedule'] );
     echo json_encode(subscription::get_instance( $goto ), JSON_PRETTY_PRINT);
-    header('Location: ./sub/'.$goto);
     exit;
     break;
   case 'del' :
-    echo "trying to delete\n";
+    echo "Trying to delete\n";
     $fccdb->delete('subscriptions',"sub_id = $sub_id");
     echo "Sub #$sub_id deleted.";
     break;
