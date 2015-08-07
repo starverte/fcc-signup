@@ -35,6 +35,9 @@ switch ($method) {
     echo json_encode($sub, JSON_PRETTY_PRINT);
     break;
   case 'set' :
+    if (!empty($_REQUEST['plan']) && !fcc_validate_fk($_REQUEST['plan'], 'plans', 'plan_id')) {
+      echo $_REQUEST['plan'].' is not a valid ID of a plan';
+    };
     subscription::set_instance($sub_id, $_REQUEST['plan'], $_REQUEST['user'], $_REQUEST['balance'], $_REQUEST['status'], $_REQUEST['pmt_schedule']);
     echo json_encode(subscription::get_instance( $sub_id ), JSON_PRETTY_PRINT);
     break;

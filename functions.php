@@ -49,3 +49,28 @@ function _method( $text ) {
   }
 }
 
+function fcc_validate_fk($input, $table, $match)
+{
+  global $fccdb;
+
+  $input = (int) $input;
+
+  $conn = $fccdb->connect();
+  
+  try {
+    $query = $conn->query("SELECT * from $table WHERE $match=$input");
+    if ($query->rowCount()===0) {
+      $matches = false;
+    }
+    else {
+      $matches = true;
+    }
+    $conn = null;
+    return $matches;
+  }
+  catch (PDOException $e) {
+    $conn = null;
+    die ('Query failed: ' . $e->getMessage());
+  }
+}
+
