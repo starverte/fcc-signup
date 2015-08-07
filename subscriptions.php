@@ -27,20 +27,28 @@ else {
 switch ($method) {
   case 'get' :
     $sub = subscription::get_instance( $sub_id );
+    if (empty($sub->sub_id)) {
+      header('HTTP/1.0 404 Not Found');
+      echo 'There is no subscription with that ID';
+      exit;
+    }
     echo json_encode($sub, JSON_PRETTY_PRINT);
     break;
   case 'set' :
-    subscription::set_instance($sub_id, $_REQUEST['plan'],$_REQUEST['user'],$_REQUEST['balance'],$_REQUEST['status'],$_REQUEST['pmt_schedule']);
+    subscription::set_instance($sub_id, $_REQUEST['plan'], $_REQUEST['user'], $_REQUEST['balance'], $_REQUEST['status'], $_REQUEST['pmt_schedule']);
     echo json_encode(subscription::get_instance( $sub_id ), JSON_PRETTY_PRINT);
     break;
   case 'new' :
     $goto = subscription::new_instance( $_REQUEST['plan'],$_REQUEST['user'],$_REQUEST['balance'],$_REQUEST['status'],$_REQUEST['pmt_schedule'] );
     echo json_encode(subscription::get_instance( $goto ), JSON_PRETTY_PRINT);
+    header('HTTP/1.1 201 Content Created');
+    header('Location: ./sub/'.$goto);
     exit;
     break;
   case 'del' :
     echo "Trying to delete\n";
     $fccdb->delete('subscriptions',"sub_id = $sub_id");
+    header('HTTP/1.1 204 Content Deleted');
     echo "Sub #$sub_id deleted.";
     break;
   default:
