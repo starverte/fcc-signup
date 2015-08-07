@@ -91,15 +91,15 @@ class fccdb {
    * @uses fccdb::query()
    *
    * @param string $table   The database table to delete from
-   * @param int $id         The id to delete
+   * @param int $statement  The stqatement to delete
    *
    * @var    string $query The select statement to be executed
    */
-  function delete($table, $id) {
+  function delete($table, $statement) {
     /**
      * Build the query
      */
-    $query = "DELETE * FROM $table WHERE id = $id";
+    $query = "DELETE FROM $table WHERE $statement";
 
     /**
      * Execute the query

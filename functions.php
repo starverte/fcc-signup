@@ -41,7 +41,7 @@ function _text( $text, $length = 0 ) {
 function _method( $text ) {
   $new = preg_replace( '[^0-9a-fA-F]', '', $text);
   
-  if ('get' === $new || 'set' === $new || 'new' === $new) {
+  if ('get' === $new || 'set' === $new || 'new' === $new || 'del' === $new) {
     return $new;
   }
   else {
