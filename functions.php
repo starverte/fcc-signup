@@ -59,12 +59,7 @@ function fcc_validate_fk($input, $table, $match)
   
   try {
     $query = $conn->query("SELECT * from $table WHERE $match=$input");
-    if ($query->rowCount()===0) {
-      $matches = false;
-    }
-    else {
-      $matches = true;
-    }
+    $matches = ($query->rowCount()!==0);
     $conn = null;
     return $matches;
   }
@@ -74,3 +69,7 @@ function fcc_validate_fk($input, $table, $match)
   }
 }
 
+function fcc_validate_dollars($input)
+{
+  return round(floatval($input),2);
+}

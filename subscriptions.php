@@ -24,6 +24,7 @@ else {
   $method = 'new';
 }
 
+
 switch ($method) {
   case 'get' :
     $sub = subscription::get_instance( $sub_id );
@@ -36,12 +37,25 @@ switch ($method) {
     break;
   case 'set' :
     if (!empty($_REQUEST['plan']) && !fcc_validate_fk($_REQUEST['plan'], 'plans', 'plan_id')) {
-      echo $_REQUEST['plan'].' is not a valid ID of a plan';
+      echo '"'.$_REQUEST['plan'].'" is not a valid ID of a plan';
+      exit;
+    };
+    if (!empty($_REQUEST['user']) && !fcc_validate_fk($_REQUEST['user'], 'users', 'user_id')) {
+      echo '"'.$_REQUEST['user'].'" is not a valid ID of a user';
+      exit;
     };
     subscription::set_instance($sub_id, $_REQUEST['plan'], $_REQUEST['user'], $_REQUEST['balance'], $_REQUEST['status'], $_REQUEST['pmt_schedule']);
     echo json_encode(subscription::get_instance( $sub_id ), JSON_PRETTY_PRINT);
     break;
   case 'new' :
+    if (!empty($_REQUEST['plan']) && !fcc_validate_fk($_REQUEST['plan'], 'plans', 'plan_id')) {
+      echo '"'.$_REQUEST['plan'].'" is not a valid ID of a plan';
+      exit;
+    };
+    if (!empty($_REQUEST['user']) && !fcc_validate_fk($_REQUEST['user'], 'users', 'user_id')) {
+      echo '"'.$_REQUEST['user'].'" is not a valid ID of a user';
+      exit;
+    };
     $goto = subscription::new_instance( $_REQUEST['plan'],$_REQUEST['user'],$_REQUEST['balance'],$_REQUEST['status'],$_REQUEST['pmt_schedule'] );
     echo json_encode(subscription::get_instance( $goto ), JSON_PRETTY_PRINT);
     header('HTTP/1.1 201 Content Created');

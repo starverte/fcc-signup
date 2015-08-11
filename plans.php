@@ -15,7 +15,7 @@ else {
   $method = 'get';
 }
 if ( !empty( $_REQUEST['id']  ) ) {
-  $plan_id = (int) $_REQUEST['id'];
+  $plan_id = $_REQUEST['id'];
 }
 else {
   $plan_id = rand(1,25);

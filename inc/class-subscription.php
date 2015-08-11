@@ -154,12 +154,12 @@ class subscription {
   public static function new_instance( $sub_plan,$sub_user,$sub_balance,$sub_status,$sub_pmt_schedule ) {
     global $fccdb;
 
-    $sub_plan = !empty($sub_plan) ? floatval($sub_plan) : '5';
-    $sub_user = !empty($sub_user) ? floatval($sub_user) : '1';
+    $sub_plan = !empty($sub_plan) && fcc_validate_fk($sub_plan, 'plans', 'plan_id') ? floatval($sub_plan) : '5';
+    $sub_user = !empty($sub_user) && fcc_validate_fk($sub_user, 'users', 'user_id') ? floatval($sub_user) : '1';
     $sub_date_created = date('Y-m-d H:i:s');
-    $sub_balance = !empty($sub_balance) ? floatval($sub_balance) : '1';
-    $sub_status = _text($sub_status, 32);
-    $sub_pmt_schedule = _text($sub_pmt_schedule, 32);
+    $sub_balance = !empty($sub_balance) ? fcc_validate_dollars($sub_balance) : '1.00';
+    $sub_status = !empty($sub_status) ? _text($sub_status, 32) : 'new';
+    $sub_pmt_schedule = $sub_pmt_schedule === 'yearly' ? 'yearly' : 'monthly';
 
     return $fccdb->insert('subscriptions', 'sub_plan,sub_user,sub_date_created,sub_balance,sub_status,sub_pmt_schedule', "$sub_plan,$sub_user,NOW(),$sub_balance,'$sub_status','$sub_pmt_schedule'" );
   }
@@ -192,9 +192,9 @@ class subscription {
 
     $_subscription = self::get_instance( $sub_id );
 
-    $sub_plan = !empty($sub_plan) ? floatval($sub_plan) : $_subscription->sub_plan;
-    $sub_user = !empty($sub_user) ? floatval($sub_user) : $_subscription->sub_user;
-    $sub_balance = !empty($sub_balance) ? floatval($sub_balance) : $_subscription->sub_balance;
+    $sub_plan = !empty($sub_plan) && fcc_validate_fk($sub_plan, 'plans', 'plan_id') ? $sub_plan : $_subscription->sub_plan;
+    $sub_user = !empty($sub_user) && fcc_validate_fk($sub_user, 'users', 'user_id') ? $sub_user : $_subscription->sub_user;
+    $sub_balance = !empty($sub_balance) ? fcc_validate_dollars($sub_balance) : $_subscription->sub_balance;
     $sub_status = !empty($sub_status) ? _text($sub_status, 32) : $_subscription->sub_status;
     $sub_pmt_schedule = !empty($sub_pmt_schedule) ? _text($sub_pmt_schedule, 32): $_subscription->sub_pmt_schedule;
 
