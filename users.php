@@ -129,9 +129,9 @@ switch ($method) {
                 
                 
                 
-                  <h2 class="tagline hidden-xs" style="font-size: 36px;"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?"- $user->user_company":'') ?></h2>
+                  <h2 class="tagline hidden-xs" style="font-size: 36px;"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?" - $user->user_company":'') ?></h2>
 
-                  <h2 class="tagline visible-xs-block" style="font-size: 24px;"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?"- $user->user_company":'') ?></h2>
+                  <h2 class="tagline visible-xs-block" style="font-size: 24px;"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?" - $user->user_company":'') ?></h2>
 
                   <div class="clearfix"><p></p></div>
 
@@ -162,7 +162,7 @@ switch ($method) {
             <div class="col-xs-12 col-sm-12 hidden-md hidden-lg"></div>    <article id="post-1230" class="col-xs-12 post-1230 page type-page status-publish hentry">
               <header class="entry-header">
                         
-                <h1 class="entry-title"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?"- $user->user_company":'') ?></h1>
+                <h1 class="entry-title"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?" - $user->user_company":'') ?></h1>
                 
                 <div class="entry-meta">
                           </div><!-- .entry-meta -->
@@ -171,23 +171,62 @@ switch ($method) {
               </header><!-- .entry-header -->
 
                     <div class="entry-content">
-                      <p>Email: <a href=<?php echo "'mailto:$user->user_email'>$user->user_email" ?></a></p>
-                      <p><?php echo $user->user_address ? 'Address: '.address::get_instance_pretty($user->user_address, false) : "$user->user_name_first $user->user_name_last hasn't entered his/her address yet" ?></p>
-                      <p><?php echo $user->user_company ? "Works at: $user->user_company" : "$user->user_name_first $user->user_name_last hasn't entered his/her company yet" ?></p>
-                      <h3>Subscriptions: </h3>
-                      <?php
-                        $subs = subscription::get_by_user($user_id);
-                        if ($subs) {
-                          foreach ($subs as $_sub) {
-                            echo '<p>Plan: '.plan::get_instance($_sub->sub_id)->plan_name.'</p>' .
-                                 "<p>Created: $_sub->sub_date_created</p>" .
-                                 "<p>Status: $_sub->sub_status</p><br />";
+                      <?php if (!$_REQUEST['subs']) { ?>
+                      <div class="col-lg-4 col-md-4 col-sm-6">
+                        <h3>About: </h3>
+                        <p>Email: <a href=<?php echo "'mailto:$user->user_email'>$user->user_email" ?></a></p>
+                        <p><?php echo $user->user_company ? "Works at: $user->user_company" : "$user->user_name_first $user->user_name_last hasn't entered his/her company yet" ?></p>
+                      </div>
+                      <div class="col-lg-4 col-md-4 col-sm-6">
+                        <h3>Address: </h3>
+                        <p><?php echo $user->user_address ? address::get_instance_pretty($user->user_address) : "$user->user_name_first $user->user_name_last hasn't entered his/her address yet" ?></p>
+                      </div>
+                      <div class="col-lg-4 col-md-4 col-sm-6">
+                        <h3>Subscriptions: </h3>
+                        <?php
+                          function date_sort($a, $b) {
+                            if ($a->sub_date_created === $b->sub_date_created) return 0;
+                            return ($a->sub_date_created < $b->sub_date_created) || ($a->sub_status === 'deleted') ? -1 : 1;
                           }
-                        }
-                        else {
-                          echo "<p>$user->user_name_first $user->user_name_last has no subscriptions.</p>";
-                        }
-                      ?>
+                          $subs = subscription::get_by_user($user_id);
+                          usort($subs, "date_sort");
+                          if ($subs) {
+                            $len = count($subs);
+                            foreach (array_splice($subs, 0, 3) as $_sub) {
+                                echo '<p>Plan: '.plan::get_instance($_sub->sub_plan)->plan_name.'</p>' .
+                                     "<p>Status: $_sub->sub_status</p><br />";
+                            }
+                            if (3<$len) {
+                              echo '<p><a href="../user/'.$user_id.'/subs">' . ($len-3) . ' more ...</a></p>';
+                            }
+                            else {
+                              echo '<p><a href="../user/'.$user_id.'/subs">More details</a></p>';
+                            }
+                          }
+                          else {
+                            echo "<p>$user->user_name_first $user->user_name_last has no subscriptions.</p>";
+                          }}
+                          else {
+                            function date_sort($a, $b) {
+                              if ($a->sub_date_created === $b->sub_date_created) return 0;
+                              return ($a->sub_date_created < $b->sub_date_created) || ($a->sub_status === 'deleted') ? -1 : 1;
+                            }
+                            $subs = subscription::get_by_user($user_id);
+                            usort($subs, "date_sort");
+                            if ($subs) {
+                              foreach ($subs as $_sub) {
+                                  echo '<div class="col-lg-4 col-md-4 col-sm-6">' .
+                                       '<p>Plan: '.plan::get_instance($_sub->sub_plan)->plan_name.'</p>' .
+                                       "<p>Status: $_sub->sub_status</p>" .
+                                       "<p>Payment Schedule: $_sub->sub_pmt_schedule</p>" .
+                                       "<p>Balance: $$_sub->sub_balance</p>" .
+                                       "<p>Date Created: $_sub->sub_date_created</p>" .
+                                       '<br /><br /></div>';
+                              }
+                            }
+                          }
+                        ?>
+                      </div>
                     </div><!-- .entry-content -->
               
               <footer class="entry-meta clearfix">
