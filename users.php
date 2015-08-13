@@ -129,9 +129,9 @@ switch ($method) {
                 
                 
                 
-                  <h2 class="tagline hidden-xs" style="font-size: 36px;"><?php echo "$user->user_name_first $user->user_name_last" ?> - Star Verte LLC</h2>
+                  <h2 class="tagline hidden-xs" style="font-size: 36px;"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?"- $user->user_company":'') ?></h2>
 
-                  <h2 class="tagline visible-xs-block" style="font-size: 24px;"><?php echo "$user->user_name_first $user->user_name_last" ?> - Star Verte LLC</h2>
+                  <h2 class="tagline visible-xs-block" style="font-size: 24px;"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?"- $user->user_company":'') ?></h2>
 
                   <div class="clearfix"><p></p></div>
 
@@ -162,7 +162,7 @@ switch ($method) {
             <div class="col-xs-12 col-sm-12 hidden-md hidden-lg"></div>    <article id="post-1230" class="col-xs-12 post-1230 page type-page status-publish hentry">
               <header class="entry-header">
                         
-                <h1 class="entry-title"><?php echo "$user->user_name_first $user->user_name_last" ?> - Star Verte LLC</h1>
+                <h1 class="entry-title"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?"- $user->user_company":'') ?></h1>
                 
                 <div class="entry-meta">
                           </div><!-- .entry-meta -->
