@@ -130,6 +130,24 @@ class subscription {
     return new subscription ( $_subscription );
   }
 
+  public static function get_by_user( $user_id )
+  {
+    global $fccdb;
+
+    $user_id = (int) $user_id;
+
+    if ( !$user_id) return false;
+
+    $_subscriptions = self::query("SELECT * FROM subscriptions WHERE sub_user = $user_id");
+    $subs = array();
+
+    foreach ($_subscriptions as $_sub) {
+      $subs[] = new subscription(array($_sub));
+    }
+
+    return $subs;
+  }
+
   /**
    * Insert subscription in database
    *
