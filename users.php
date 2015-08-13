@@ -181,7 +181,7 @@ switch ($method) {
                           foreach ($subs as $_sub) {
                             echo '<p>Plan: '.plan::get_instance($_sub->sub_id)->plan_name.'</p>' .
                                  "<p>Created: $_sub->sub_date_created</p>" .
-                                 "<p>Status: $_sub->sub_status</p>";
+                                 "<p>Status: $_sub->sub_status</p><br />";
                           }
                         }
                         else {
