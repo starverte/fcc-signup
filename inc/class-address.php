@@ -148,7 +148,7 @@ class Address {
 
     if (!$addr->addr_id) {return false;}
 
-    $nl = $nl ? "\n" : ", ";
+    $nl = $nl ? "<br />" : ", ";
     $addr->addr_state = strtoupper($addr->addr_state);
 
     return "$addr->addr_street$nl$addr->addr_city, $addr->addr_state $addr->addr_zip_code";
