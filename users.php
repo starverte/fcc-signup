@@ -1,5 +1,4 @@
 <?php
-
 include_once('config.php');
 include_once('inc/class-fccdb.php');
 include_once('inc/class-user.php');
@@ -7,9 +6,7 @@ include_once('inc/class-address.php');
 include_once('inc/class-subscription.php');
 include_once('inc/class-plan.php');
 include_once('functions.php');
-
 $fccdb = new fccdb;
-
 if ( !empty( $_REQUEST['method']  ) ) {
   $method = _method( $_REQUEST['method']);
 }
@@ -20,12 +17,8 @@ if ( !empty( $_REQUEST['id']  ) ) {
   $user_id = (int) $_REQUEST['id'];
 }
 else {
-  $user_id = rand(1,25);
+  $user_id = 1;
 }
-
-$user_id = min($user_id,25);
-$user_id = max($user_id,0);
-
 switch ($method) {
   case 'get' :
     $user = user::get_instance( $user_id );
@@ -49,22 +42,22 @@ switch ($method) {
         <link href="http://starverte.com/feed/" rel="alternate" title="Star Verte LLC &raquo; Feed" type="application/rss+xml">
         <link href="http://starverte.com/comments/feed/" rel="alternate" title="Star Verte LLC &raquo; Comments Feed" type="application/rss+xml">
         <script type="text/javascript">
-      window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/starverte.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.4"}};
-        !function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+                  window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/starverte.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.4"}};
+                    !function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
         </script>
         <style type="text/css">
-      img.wp-smiley,
-        img.emoji {
-        display: inline !important;
-        border: none !important;
-        box-shadow: none !important;
-        height: 1em !important;
-        width: 1em !important;
-        margin: 0 .07em !important;
-        vertical-align: -0.1em !important;
-        background: none !important;
-        padding: 0 !important;
-        }
+            img.wp-smiley,
+              img.emoji {
+                display: inline !important;
+                border: none !important;
+                box-shadow: none !important;
+                height: 1em !important;
+                width: 1em !important;
+                margin: 0 .07em !important;
+                vertical-align: -0.1em !important;
+                background: none !important;
+                padding: 0 !important;
+              }
         </style>
         <link href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css?ver=3.3.5' id='bootstrap-css-css' media='all' rel='stylesheet' type='text/css'>
         <link href='http://starverte.com/wp-content/plugins/steel/css/slides.css?ver=1.2.1' id='slides-mod-style-css' media='all' rel='stylesheet' type='text/css'>
@@ -82,7 +75,7 @@ switch ($method) {
         <link href='//i1.wp.com' rel='dns-prefetch'>
         <link href='//i2.wp.com' rel='dns-prefetch'>
         <style id="custom-background-css" type="text/css">
-      body.custom-background { background-color: #ffffff; }
+            body.custom-background { background-color: #ffffff; }
         </style><!-- Jetpack Open Graph Tags -->
         <meta content="website">
         <meta content="Star Verte LLC">
@@ -94,7 +87,7 @@ switch ($method) {
         <meta content="summary" name="twitter:card">
         <style type="text/css">
       body {background-color: #ffffff; font-family: "Open Sans",         sans-serif; font-weight: 300; }h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .navbar-brand { font-family: "Open Sans",         sans-serif; font-weight: 400;}a {color:#3cb400;}a:hover, a:focus {color:#226800;}blockquote {border-left-color: #55ff01;}.fill { background-color: #3cb400; border-color: #1a4e00; color: #ffffff; }.navbar-inverse .navbar-nav > li > a, .fill a, .fill-light a { color: #d9d9d9; }.fill a:hover, .fill-light a:hover { color: #ffffff; }.site-branding a, .site-branding a:hover { color: #ffffff; }.navbar-inverse .navbar-nav > .dropdown > a .caret { border-top-color: #d9d9d9; border-bottom-color: #d9d9d9; }.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus { color: #ffffff; background-color: #1a4e00;
-        }.navbar-brand { color: #ffffff!important; }.fill-light { background: #55ff01; color: #ffffff; }
+              }.navbar-brand { color: #ffffff!important; }.fill-light { background: #55ff01; color: #ffffff; }
         </style>
       </head>
 
@@ -215,18 +208,18 @@ switch ($method) {
 
                       <h3>Subscriptions:</h3>
                       <?php
-                      $subs = subscription::get_by_user($user_id);
-                      if ($subs) {
-                      foreach ($subs as $_sub) {
-                      echo '<p>Plan: '.plan::get_instance($_sub->sub_id)->plan_name.'</p>' .
-                      "<p>Created: $_sub->sub_date_created</p>" .
-                      "<p>Status: $_sub->sub_status</p><br />";
-                      }
-                      }
-                      else {
-                      echo "<p>$user->user_name_first $user->user_name_last has no subscriptions.</p>";
-                      }
-                      ?>
+                                              $subs = subscription::get_by_user($user_id);
+                                              if ($subs) {
+                                                foreach ($subs as $_sub) {
+                                                  echo '<p>Plan: '.plan::get_instance($_sub->sub_id)->plan_name.'</p>' .
+                                                       "<p>Created: $_sub->sub_date_created</p>" .
+                                                       "<p>Status: $_sub->sub_status</p><br />";
+                                                }
+                                              }
+                                              else {
+                                                echo "<p>$user->user_name_first $user->user_name_last has no subscriptions.</p>";
+                                              }
+                                            ?>
                     </div>
                     <!-- .entry-content -->
 
@@ -242,8 +235,142 @@ switch ($method) {
 
                 <nav class="navigation-paging" id="nav-below">
                   <h1 class="screen-reader-text">Post navigation</h1>
+
+
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
+                    </div>
+
+
+                    <article class="col-xs-12 post-1230 page type-page status-publish hentry" id="post-1230">
+                      <header class="entry-header">
+                        <h1 class="entry-title"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?" - $user->user_company":'') ?>
+                        </h1>
+
+
+                        <div class="entry-meta">
+                        </div>
+                        <!-- .entry-meta -->
+                      </header>
+                      <!-- .entry-header -->
+
+
+                      <div class="entry-content">
+                        <?php if (!$_REQUEST['subs']) { ?>
+
+                        <div class="shell col-lg-4 col-md-4 col-sm-6">
+                          <div class="card">
+                            <p class="title">About</p>
+
+
+                            <p>Email: <a href="%3C?php%20echo%20&quot;'mailto:$user-">user_email'&gt;$user-&gt;user_email" ?&gt;</a></p>
+
+
+                            <p><?php echo $user->user_company ? "Works at: $user->user_company" : "$user->user_name_first $user->user_name_last hasn't entered his/her company yet" ?>
+                            </p>
+                          </div>
+                        </div>
+
+
+                        <div class="shell col-lg-4 col-md-4 col-sm-6">
+                          <div class="card">
+                            <p class="title">Address</p>
+
+
+                            <p><?php echo $user->user_address ? address::get_instance_pretty($user->user_address) : "$user->user_name_first $user->user_name_last hasn't entered his/her address yet" ?>
+                            </p>
+                          </div>
+                        </div>
+
+
+                        <div class="shell col-lg-4 col-md-4 col-sm-6">
+                          <div class="card">
+                            <p class="title">Subscriptions</p>
+                            <?php
+                                                function date_sort($a, $b) {
+                                                  if ($a->sub_date_created === $b->sub_date_created) return 0;
+                                                  return ($a->sub_date_created < $b->sub_date_created) ? 1 : -1;
+                                                }
+                                                $subs = subscription::get_by_user($user_id);
+                                                usort($subs, "date_sort");
+                                                if ($subs) {
+                                                  $len = count($subs);
+                                                  $num = 0;
+                                                  foreach (array_splice($subs, 0, 3) as $_sub) {
+                                                    if ($_sub->sub_status !== 'deleted') {
+                                                      $num += 1;
+                                                      echo '<div class="col-lg-6 col-md-12 col-sm-12">' .
+                                                           '<p>Plan: '.plan::get_instance($_sub->sub_plan)->plan_name.'</p>' .
+                                                           "<p>Status: $_sub->sub_status</p><br />" .
+                                                           '</div>';
+                                                    }
+                                                  }
+                                                  if ($num % 2 === 0) {echo '<div>';}
+                                                  else echo '<div class="col-lg-6 col-md-12 col-sm-12">';
+                                                  if ($num<$len) {
+                                                    echo '<p class="center"><a href="./'.$user_id.'/subs">' . ($len-$num) . ' more ...</a></p></div>';
+                                                  }
+                                                  else {
+                                                    echo '<p class="center"><a href="./'.$user_id.'/subs">More details</a></p></div>';
+                                                  }
+                                                  echo '<div class="clearfix"><p></p></div>';
+                                                }
+                                                else {
+                                                  echo "<p>$user->user_name_first $user->user_name_last has no subscriptions.</p>";
+                                                }}
+                                                else {
+                                                  function date_sort($a, $b) {
+                                                    if ($a->sub_date_created === $b->sub_date_created) return 0;
+                                                    return (strtotime($a->sub_date_created) < strtotime($b->sub_date_created)) || ($a->sub_status === 'deleted' && $b->sub_status !== 'deleted') ? 1 : -1;
+                                                  }
+                                                  $subs = subscription::get_by_user($user_id);
+                                                  usort($subs, "date_sort");
+                                                  if ($subs) {
+                                                    echo '<table class="table">' .
+                                                         '</td><td>Plan</td><td>Start Date</td><td>Payment Schedule</td><td></td></tr>';
+                                                    foreach ($subs as $_sub) {
+                                                        $date = strtotime($_sub->sub_date_created);
+                                                        echo '<tr class="' . ($_sub->sub_status === 'active' ? 'success': ($_sub->sub_status === 'suspended' ? 'warning' : ($_sub->sub_status === 'pending' ? 'info' : 'danger'))) . '">' .
+                                                             '<td>'.plan::get_instance($_sub->sub_plan)->plan_name.'</td>' .
+                                                             '<td>'. (date('y', $date) == '15' ? date('F j', $date) : date('n/j/Y', $date)) .'</td>' .
+                                                             "<td>$_sub->sub_pmt_schedule</td>" .
+                                                             '<td>';
+                                                            if ($_sub->sub_status === 'suspended') {
+                                                              if ($_sub->sub_balance > 0) echo "Suspended - Balance due $$_sub->sub_balance";
+                                                            }
+                                                            else if ($_sub->sub_status === 'pending') {
+                                                              echo 'Awaiting verification';
+                                                            }
+                                                            else if ($_sub->sub_status === 'active') {
+                                                              echo "Active";
+                                                            }
+                                                            else echo "Deleted";
+                                                            echo '</td></tr>';
+                                                    }
+                                                    echo '</table>';
+                                                  } else echo "<p>$user->user_name_first $user->user_name_last has no subscriptions.</p>";
+                                                }
+                                              ?>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- .entry-content -->
+
+
+                      <footer class="entry-meta clearfix">
+                      </footer>
+                      <!-- .entry-meta -->
+                    </article>
+                    <!-- #post-1230 -->
+                  </div>
+                  <!-- .row -->
+
+
+                  <nav class="navigation-paging" id="nav-below">
+                    <h1 class="screen-reader-text">Post navigation</h1>
+                  </nav>
+                  <!-- #nav-below -->
                 </nav>
-                <!-- #nav-below -->
               </div>
               <!-- #content .site-content -->
             </div>
@@ -287,14 +414,14 @@ switch ($method) {
         </footer>
         <!-- #colophon -->
         <script type="text/javascript">
-      var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-31634182-1']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
+              var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-31634182-1']);
+                _gaq.push(['_trackPageview']);
+                (function() {
+                  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
         </script>
 
         <div style="display:none">
@@ -304,9 +431,9 @@ switch ($method) {
         var WPGroHo = {"my_hash":""};
         /* ]]> */
         </script> <script src='http://starverte.com/wp-content/plugins/jetpack/modules/wpgroho.js?ver=4.2.4' type='text/javascript'></script> <script src='http://starverte.com/wp-content/themes/flint/js/skip-link-focus-fix.js?ver=9f3e2cd' type='text/javascript'></script> <script async="" defer src='http://stats.wp.com/e-201533.js' type='text/javascript'></script> <script type='text/javascript'>
-      _stq = window._stq || [];
-        _stq.push([ 'view', {v:'ext',j:'1:3.6.1',blog:'31218908',post:'1230',tz:'-6',srv:'starverte.com'} ]);
-        _stq.push([ 'clickTrackerInit', '31218908', '1230' ]);
+        _stq = window._stq || [];
+          _stq.push([ 'view', {v:'ext',j:'1:3.6.1',blog:'31218908',post:'1230',tz:'-6',srv:'starverte.com'} ]);
+          _stq.push([ 'clickTrackerInit', '31218908', '1230' ]);
         </script>
       </body>
       </html>
