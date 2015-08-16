@@ -66,14 +66,45 @@ class fccdb {
       }
       while ($query->nextRowset());
 
-      $conn = null;
-
-      return $results;
+      if (empty($results)) {
+        $insertID = $conn->lastInsertId();
+        $conn = null;
+        return $insertID;
+      }
+      else {
+        $conn = null;
+        return $results;
+      }
     }
     catch (PDOException $e) {
       $conn = null;
       die ('Query failed: ' . $e->getMessage());
     }
+
+  }
+
+  /**
+   * Execute delete statement
+   *
+   * Build a SQL delete statement, and execute the statement
+   *
+   * @uses fccdb::query()
+   *
+   * @param string $table   The database table to delete from
+   * @param int $statement  The stqatement to delete
+   *
+   * @var    string $query The select statement to be executed
+   */
+  function delete($table, $statement) {
+    /**
+     * Build the query
+     */
+    $query = "DELETE FROM $table WHERE $statement";
+
+    /**
+     * Execute the query
+     */
+    $this->query($query);
 
   }
 

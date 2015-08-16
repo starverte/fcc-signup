@@ -41,7 +41,7 @@ function _text( $text, $length = 0 ) {
 function _method( $text ) {
   $new = preg_replace( '[^0-9a-fA-F]', '', $text);
   
-  if ('get' === $new || 'set' === $new || 'new' === $new) {
+  if ('get' === $new || 'set' === $new || 'new' === $new || 'del' === $new) {
     return $new;
   }
   else {
@@ -49,3 +49,27 @@ function _method( $text ) {
   }
 }
 
+function fcc_validate_fk($input, $table, $match)
+{
+  global $fccdb;
+
+  $input = (int) $input;
+
+  $conn = $fccdb->connect();
+  
+  try {
+    $query = $conn->query("SELECT * from $table WHERE $match=$input");
+    $matches = ($query->rowCount()!==0);
+    $conn = null;
+    return $matches;
+  }
+  catch (PDOException $e) {
+    $conn = null;
+    die ('Query failed: ' . $e->getMessage());
+  }
+}
+
+function fcc_validate_dollars($input)
+{
+  return round(floatval($input),2);
+}

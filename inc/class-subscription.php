@@ -130,6 +130,24 @@ class subscription {
     return new subscription ( $_subscription );
   }
 
+  public static function get_by_user( $user_id )
+  {
+    global $fccdb;
+
+    $user_id = (int) $user_id;
+
+    if ( !$user_id) return false;
+
+    $_subscriptions = self::query("SELECT * FROM subscriptions WHERE sub_user = $user_id");
+    $subs = array();
+
+    foreach ($_subscriptions as $_sub) {
+      $subs[] = new subscription(array($_sub));
+    }
+
+    return $subs;
+  }
+
   /**
    * Insert subscription in database
    *
@@ -154,15 +172,14 @@ class subscription {
   public static function new_instance( $sub_plan,$sub_user,$sub_balance,$sub_status,$sub_pmt_schedule ) {
     global $fccdb;
 
-    $sub_plan = !empty($sub_plan) ? floatval($sub_plan) : '1';
-    $sub_user = !empty($sub_user) ? floatval($sub_user) : '1';
+    $sub_plan = !empty($sub_plan) && fcc_validate_fk($sub_plan, 'plans', 'plan_id') ? floatval($sub_plan) : '5';
+    $sub_user = !empty($sub_user) && fcc_validate_fk($sub_user, 'users', 'user_id') ? floatval($sub_user) : '1';
     $sub_date_created = date('Y-m-d H:i:s');
-    $sub_balance = !empty($sub_balance) ? floatval($sub_balance) : '1';
-    $sub_status = _text($sub_status, 32);
-    $sub_pmt_schedule = _text($sub_status, 32);
+    $sub_balance = !empty($sub_balance) ? fcc_validate_dollars($sub_balance) : '1.00';
+    $sub_status = !empty($sub_status) ? _text($sub_status, 32) : 'new';
+    $sub_pmt_schedule = $sub_pmt_schedule === 'yearly' ? 'yearly' : 'monthly';
 
-    $fccdb->insert('subscriptions', 'sub_plan,sub_user,sub_date_created,sub_balance,sub_status,sub_pmt_schedule', "$sub_plan,$sub_user,NOW(),$sub_balance,'$sub_status','$sub_pmt_schedule'" );
-    return PDO::lastInsertId();
+    return $fccdb->insert('subscriptions', 'sub_plan,sub_user,sub_date_created,sub_balance,sub_status,sub_pmt_schedule', "$sub_plan,$sub_user,NOW(),$sub_balance,'$sub_status','$sub_pmt_schedule'" );
   }
 
   /**
@@ -186,17 +203,19 @@ class subscription {
    *
    * @todo Test
    */
-  public static function set_instance( $sub_id, $sub_name = null, $sub_cost = null, $sub_desc = null ) {
+  public static function set_instance( $sub_id, $sub_plan=null, $sub_user=null, $sub_balance=null, $sub_status=null, $sub_pmt_schedule=null ) {
     global $fccdb;
 
     $sub_id = (int) $sub_id;
 
     $_subscription = self::get_instance( $sub_id );
 
-    $sub_name    = !empty($sub_name)  ? _text( $sub_name, 32 ) : $_subscription->sub_name;
-    $sub_cost      = !empty($sub_cost)    ? floatval($sub_cost)      : $_subscription->sub_cost;
-    $sub_desc    = !empty($sub_desc)  ? _text( $sub_desc, 32 ) : $_subscription->sub_desc;
+    $sub_plan = !empty($sub_plan) && fcc_validate_fk($sub_plan, 'plans', 'plan_id') ? $sub_plan : $_subscription->sub_plan;
+    $sub_user = !empty($sub_user) && fcc_validate_fk($sub_user, 'users', 'user_id') ? $sub_user : $_subscription->sub_user;
+    $sub_balance = !empty($sub_balance) ? fcc_validate_dollars($sub_balance) : $_subscription->sub_balance;
+    $sub_status = !empty($sub_status) ? _text($sub_status, 32) : $_subscription->sub_status;
+    $sub_pmt_schedule = !empty($sub_pmt_schedule) ? _text($sub_pmt_schedule, 32): $_subscription->sub_pmt_schedule;
 
-    $fccdb->update('subscriptions', 'sub_name,sub_cost,sub_desc', "'$sub_name', $sub_cost, '$sub_desc'", "sub_id = $sub_id" );
+    $fccdb->update('subscriptions', "sub_plan=$sub_plan,sub_user=$sub_user,sub_balance=$sub_balance,sub_status='$sub_status',sub_pmt_schedule='$sub_pmt_schedule'", "sub_id = $sub_id" );
   }
 }
