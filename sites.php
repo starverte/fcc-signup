@@ -21,9 +21,6 @@ else {
   $site_id = rand(1,25);
 }
 
-$site_id = min($site_id,25);
-$site_id = max($site_id,0);
-
 switch ($method) {
   case 'get' :
     $site = site::get_instance( $site_id );
