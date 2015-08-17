@@ -89,6 +89,18 @@ class User {
     }
   }
 
+  public static function login($mail, $pw) {
+    global $fccdb;
+
+    $mail = _text($mail);
+    $pw = _text($pw);
+
+    $q = self::query("SELECT * FROM users WHERE user_email = '$mail' AND user_password = '$pw' ORDER BY user_id DESC LIMIT 1");
+
+    return new User ($q) ?: false;
+  }
+
+
   /**
    * Get User information from database
    *
