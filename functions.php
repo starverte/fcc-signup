@@ -49,6 +49,29 @@ function _method( $text ) {
   }
 }
 
+
+/**
+ * Sanitize text input and trim to size
+ *
+ * First, make sure only numbers and letters are used.
+ * Next, if length is specificied, trim to length.
+ *
+ * @param  string $text The string to sanitize
+ * @param  int    $length The length of the string
+ * @return string
+ * @var    string $new The sanitized string
+ */
+function _class( $text ) {
+  $new = preg_replace( '[^0-9a-fA-F]', '', $text);
+  
+  if ('extra' === $new || 'plan' === $new || 'site' === $new || 'subscription' === $new || 'user' === $new) {
+    return $new;
+  }
+  else {
+    return false;
+  }
+}
+
 function fcc_validate_fk($input, $table, $match)
 {
   global $fccdb;
