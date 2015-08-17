@@ -34,7 +34,6 @@ switch ($method) {
       <html lang="en-US">
       <!--<![endif]-->
 
-
       <head>
         <meta charset="UTF-8">
         <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
@@ -121,22 +120,17 @@ switch ($method) {
           <nav class="navbar navbar-canvas navbar-top">
             <h1 class="screen-reader-text">Menu</h1>
 
-
             <div class="screen-reader-text skip-link">
               <a href="#content" title="Skip to content">Skip to content</a>
             </div>
 
-
             <div class="container">
               <!-- Brand and toggle get grouped for better mobile display -->
 
-
               <div class="navbar-header">
                 <button class="navbar-toggle" data-target=".navbar-ex1-collapse" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a class="navbar-brand" href="http://starverte.com"><img alt="" height="1042" src="http://starverte.com/wp-content/uploads/2014/08/Star-Verte-small1.png" width="5505"></a>
-              </div>
-              <!-- .navbar-header -->
+              </div><!-- .navbar-header -->
               <!-- Collect the nav links, forms, and other content for toggling -->
-
 
               <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right" id="menu-top">
@@ -144,80 +138,52 @@ switch ($method) {
                     <a href="http://starverte.com/">Home</a>
                   </li>
 
-
                   <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1687" id="menu-item-1687">
                     <a href="http://starverte.com/about/">About</a>
                   </li>
-
 
                   <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1688" id="menu-item-1688">
                     <a href="http://starverte.com/blog/">Blog</a>
                   </li>
 
-
                   <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1689" id="menu-item-1689">
                     <a href="http://starverte.com/contact/">Contact</a>
                   </li>
                 </ul>
-              </div>
-              <!-- .navbar-collapse -->
-            </div>
-            <!-- .container -->
-          </nav>
-          <!-- .navbar -->
-
+              </div><!-- .navbar-collapse -->
+            </div><!-- .container -->
+          </nav><!-- .navbar -->
 
           <div class="fill site-header" id="masthead">
             <div class="container">
               <div class="site-branding">
-                <h2 class="tagline hidden-xs" style="font-size: 36px;"><?php echo "$user->user_name_first $user->user_name_last" . ($_REQUEST['subs'] ? '\'s Subscriptions' : ($user->user_company ? " - $user->user_company" : '')) ?>
-                </h2>
+                <h2 class="tagline hidden-xs" style="font-size: 36px;"><?php echo "$user->user_name_first $user->user_name_last" . ($_REQUEST['subs'] ? '\'s Subscriptions' : ($user->user_company ? " - $user->user_company" : '')) ?></h2>
 
-
-                <h2 class="tagline visible-xs-block" style="font-size: 24px;"><?php echo "$user->user_name_first $user->user_name_last" . ($_REQUEST['subs'] ? '\'s Subscriptions' : ($user->user_company ? " - $user->user_company" : '')) ?>
-                </h2>
-
+                <h2 class="tagline visible-xs-block" style="font-size: 24px;"><?php echo "$user->user_name_first $user->user_name_last" . ($_REQUEST['subs'] ? '\'s Subscriptions' : ($user->user_company ? " - $user->user_company" : '')) ?></h2>
 
                 <div class="clearfix">
-                  <p>
-                  </p>
+                  <p></p>
                 </div>
-              </div>
-              <!-- .site-branding -->
-            </div>
-            <!-- .container -->
-          </div>
-          <!-- #masthead -->
-
+              </div><!-- .site-branding -->
+            </div><!-- .container -->
+          </div><!-- #masthead -->
 
           <div class="stripe">
-            <div class="container">
-            </div>
-            <!-- .container -->
-          </div>
-          <!-- .stripe -->
-
+            <div class="container"></div><!-- .container -->
+          </div><!-- .stripe -->
 
           <div class="content-area container" id="primary">
             <div class="row">
               <div class="site-content col-xs-12" id="content">
                 <div class="row">
-                  <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
-                  </div>
-
+                  <div class="col-xs-12 col-sm-12 hidden-md hidden-lg"></div>
 
                   <article class="col-xs-12 post-1230 page type-page status-publish hentry" id="post-1230">
                     <header class="entry-header">
-                      <h1 class="entry-title"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?" - $user->user_company":'') ?>
-                      </h1>
+                      <h1 class="entry-title"><?php echo "$user->user_name_first $user->user_name_last".(!!$user->user_company?" - $user->user_company":'') ?></h1>
 
-
-                      <div class="entry-meta">
-                      </div>
-                      <!-- .entry-meta -->
-                    </header>
-                    <!-- .entry-header -->
-
+                      <div class="entry-meta"></div><!-- .entry-meta -->
+                    </header><!-- .entry-header -->
 
                     <div class="entry-content">
                       <?php if (!$_REQUEST['subs']) { ?>
@@ -226,31 +192,23 @@ switch ($method) {
                         <div class="card">
                           <p class="title">About</p>
 
+                          <p>Email: <?php echo "<a href='mailto:$user->user_email'>$user->user_email" ?></p>
 
-                          <p>Email: <a href="%3C?php%20echo%20&quot;'mailto:$user-">user_email'&gt;$user-&gt;user_email" ?&gt;</a></p>
-
-
-                          <p><?php echo $user->user_company ? "Works at: $user->user_company" : "$user->user_name_first $user->user_name_last hasn't entered his/her company yet" ?>
-                          </p>
+                          <p><?php echo $user->user_company ? "Works at: $user->user_company" : "$user->user_name_first $user->user_name_last hasn't entered his/her company yet" ?></p>
                         </div>
                       </div>
-
 
                       <div class="shell col-lg-4 col-md-4 col-sm-6">
                         <div class="card">
                           <p class="title">Address</p>
 
-
-                          <p><?php echo $user->user_address ? address::get_instance_pretty($user->user_address) : "$user->user_name_first $user->user_name_last hasn't entered his/her address yet" ?>
-                          </p>
+                          <p><?php echo $user->user_address ? address::get_instance_pretty($user->user_address) : "$user->user_name_first $user->user_name_last hasn't entered his/her address yet" ?></p>
                         </div>
                       </div>
 
-
                       <div class="shell col-lg-4 col-md-4 col-sm-6">
                         <div class="card">
-                          <p class="title">Subscriptions</p>
-                          <?php
+                          <p class="title">Subscriptions</p><?php
                                               function date_sort($a, $b) {
                                                 if ($a->sub_date_created === $b->sub_date_created) return 0;
                                                 return ($a->sub_date_created < $b->sub_date_created) ? 1 : -1;
@@ -318,39 +276,24 @@ switch ($method) {
                                             ?>
                         </div>
                       </div>
-                    </div>
-                    <!-- .entry-content -->
+                    </div><!-- .entry-content -->
 
-
-                    <footer class="entry-meta clearfix">
-                    </footer>
-                    <!-- .entry-meta -->
-                  </article>
-                  <!-- #post-1230 -->
-                </div>
-                <!-- .row -->
-
+                    <footer class="entry-meta clearfix"></footer><!-- .entry-meta -->
+                  </article><!-- #post-1230 -->
+                </div><!-- .row -->
 
                 <nav class="navigation-paging" id="nav-below">
                   <h1 class="screen-reader-text">Post navigation</h1>
-                </nav>
-                <!-- #nav-below -->
-              </div>
-              <!-- #content .site-content -->
-            </div>
-            <!-- .row -->
-          </div>
-          <!-- #primary .content-area -->
-        </div>
+                </nav><!-- #nav-below -->
+              </div><!-- #content .site-content -->
+            </div><!-- .row -->
+          </div><!-- #primary .content-area -->
+        </div><!-- #page -->
         <!-- #page -->
-        <!-- #page -->
-
 
         <footer class="site-footer" id="colophon">
           <div class="site-info container">
-            <div class="col-lg-10 col-md-9 col-sm-8" id="footer-left">
-            </div>
-
+            <div class="col-lg-10 col-md-9 col-sm-8" id="footer-left"></div>
 
             <div class="col-lg-2 col-md-3 col-sm-4" id="credits">
               <div class="row">
@@ -358,25 +301,20 @@ switch ($method) {
                   <a href="http://starverte.com"><img class="icon-star" src="http://starverte.com/wp-content/themes/canvas/img/star.png"></a>
                 </div>
 
-
                 <div class="col-xs-4">
                   <a href="http://fortcollinscreative.com"><img class="icon-cs" src="http://starverte.com/wp-content/themes/canvas/img/Cs.png"></a>
                 </div>
-
 
                 <div class="col-xs-4">
                   <a href="http://sparks.starverte.com"><img class="icon-spark" src="http://starverte.com/wp-content/themes/canvas/img/spark.png"></a>
                 </div>
               </div>
 
-
               <p>Developed by <a href="http://starverte.com">Star Verte</a><br class="hidden-xs">
               <span class="visible-xs-inline">|</span> Powered by <a href="http://wordpress.org">WordPress</a></p>
             </div>
-          </div>
-          <!-- .site-info -->
-        </footer>
-        <!-- #colophon -->
+          </div><!-- .site-info -->
+        </footer><!-- #colophon -->
         <script type="text/javascript">
               var _gaq = _gaq || [];
                 _gaq.push(['_setAccount', 'UA-31634182-1']);
@@ -388,9 +326,7 @@ switch ($method) {
                 })();
         </script>
 
-        <div style="display:none">
-        </div>
-        <script src='http://starverte.com/wp-content/plugins/jetpack/modules/photon/photon.js?ver=20130122' type='text/javascript'></script> <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js?ver=3.3.5' type='text/javascript'></script> <script src='http://starverte.com/wp-content/plugins/steel/js/run.js?ver=1.2.1' type='text/javascript'></script> <script src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201533' type='text/javascript'></script> <script src='http://s.gravatar.com/js/gprofiles.js?ver=2015Augaa' type='text/javascript'></script> <script type='text/javascript'>
+        <div style="display:none"></div><script src='http://starverte.com/wp-content/plugins/jetpack/modules/photon/photon.js?ver=20130122' type='text/javascript'></script> <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js?ver=3.3.5' type='text/javascript'></script> <script src='http://starverte.com/wp-content/plugins/steel/js/run.js?ver=1.2.1' type='text/javascript'></script> <script src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201533' type='text/javascript'></script> <script src='http://s.gravatar.com/js/gprofiles.js?ver=2015Augaa' type='text/javascript'></script> <script type='text/javascript'>
       /* <![CDATA[ */
         var WPGroHo = {"my_hash":""};
         /* ]]> */
@@ -412,5 +348,3 @@ switch ($method) {
   default:
     break;
 }
-
-
