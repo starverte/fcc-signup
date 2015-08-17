@@ -12,6 +12,7 @@
 session_start();
 session_regenerate_id();
 
+include_once('config.php');
 include_once('inc/class-fccdb.php');
 include_once('inc/class-address.php');
 include_once('inc/class-extra.php');
@@ -58,7 +59,7 @@ if (!empty($the_type)) {
   <link rel="stylesheet" id="open-sans"  href="//fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&#038;subset=latin%2Clatin-ext&#038;ver=4.0" type="text/css" media="all" />
   <link rel="stylesheet" id="flint"  href="//raw.githubusercontent.com/starverte/flint/master/style.css" type="text/css" media="all" />
   <link rel="stylesheet" id="flint"  href="//fortcollinscreative.com/wp-content/themes/canvas/style.css" type="text/css" media="all" />
-  <link rel="stylesheet" id="stylesheet"  href="style.css" type="text/css" media="all" />
+  <link rel="stylesheet" id="stylesheet"  href="<?php echo SITE_URL; ?>style.css" type="text/css" media="all" />
 </head>
 <body>
   <div id="page" class="hfeed site">

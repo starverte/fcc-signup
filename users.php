@@ -11,6 +11,8 @@
 global $the_title;
 $the_title = 'Profile';
 include_once('header.php');
+$user_id = (int) $_REQUEST['id'];
+$user = user::get_instance($user_id);
 ?>
 
 <div class="content-area container" id="primary">
