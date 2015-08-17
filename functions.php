@@ -49,6 +49,29 @@ function _method( $text ) {
   }
 }
 
+
+/**
+ * Sanitize text input and trim to size
+ *
+ * First, make sure only numbers and letters are used.
+ * Next, if length is specificied, trim to length.
+ *
+ * @param  string $text The string to sanitize
+ * @param  int    $length The length of the string
+ * @return string
+ * @var    string $new The sanitized string
+ */
+function _class( $text ) {
+  $new = preg_replace( '[^0-9a-fA-F]', '', $text);
+  
+  if ('extra' === $new || 'plan' === $new || 'site' === $new || 'subscription' === $new || 'user' === $new) {
+    return $new;
+  }
+  else {
+    return false;
+  }
+}
+
 function fcc_validate_fk($input, $table, $match)
 {
   global $fccdb;
@@ -72,4 +95,32 @@ function fcc_validate_fk($input, $table, $match)
 function fcc_validate_dollars($input)
 {
   return round(floatval($input),2);
+}
+
+/**
+ * Checks to see if anyone is logged in
+ *
+ * @since 0.0.3
+ *
+ * @uses get_user() Gets user object to make sure user actually exists
+ *
+ * @return bool
+ * @var    int    $u_id  The ID of the user logged in
+ * @var    object $_user The user object with the ID of the user logged in
+ *
+ * @todo Do additional checks besides just if the id exists
+ */
+function is_logged_in() {
+  if (!empty($_SESSION['user_id'])) {
+    global $edb;
+    $user_id = (int) $_SESSION['user_id'];
+    $_user = get_user($user_id);
+    if (!empty($_user))
+      return true;
+    else
+      return false;
+  }
+  else {
+    return false;
+  }
 }
