@@ -73,3 +73,31 @@ function fcc_validate_dollars($input)
 {
   return round(floatval($input),2);
 }
+
+/**
+ * Checks to see if anyone is logged in
+ *
+ * @since 0.0.3
+ *
+ * @uses get_user() Gets user object to make sure user actually exists
+ *
+ * @return bool
+ * @var    int    $u_id  The ID of the user logged in
+ * @var    object $_user The user object with the ID of the user logged in
+ *
+ * @todo Do additional checks besides just if the id exists
+ */
+function is_logged_in() {
+  if (!empty($_SESSION['user_id'])) {
+    global $edb;
+    $user_id = (int) $_SESSION['user_id'];
+    $_user = get_user($user_id);
+    if (!empty($_user))
+      return true;
+    else
+      return false;
+  }
+  else {
+    return false;
+  }
+}
