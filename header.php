@@ -24,6 +24,8 @@ include_once('functions.php');
 
 $fccdb = new fccdb;
 
+$u = user::get_instance($_SESSION['user_id']);
+
 global $the_title;
 global $the_type;
 
@@ -51,11 +53,17 @@ if (!empty($the_type)) {
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
+  <style type="text/css">
+    .userdropdown {
+      float:right; margin-top: -3.5em
+    }
+  </style>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><?php echo $the_title; ?> | Fort Collins Creative</title>
   <link rel="profile" href="http://gmpg.org/xfn/11" />
   <link rel="stylesheet" id="bootstrap"  href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" id="open-sans"  href="//fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&#038;subset=latin%2Clatin-ext&#038;ver=4.0" type="text/css" media="all" />
   <link rel="stylesheet" id="flint"  href="//raw.githubusercontent.com/starverte/flint/master/style.css" type="text/css" media="all" />
   <link rel="stylesheet" id="flint"  href="//fortcollinscreative.com/wp-content/themes/canvas/style.css" type="text/css" media="all" />
@@ -87,11 +95,11 @@ if (!empty($the_type)) {
           <div class="navbar-right">
             <a class="btn btn-fcc disabled navbar-btn" href="#">Create website</a>
             <?php if (is_logged_in()) { ?>
-              <a class="btn btn-default navbar-btn" href="logout.php">Logout</a>
+              <a class="btn btn-default navbar-btn" href="<?php echo SITE_URL ?>/logout.php">Logout</a>
             <?php
             }
             else { ?>
-              <a class="btn btn-default navbar-btn" href="login.php">Login</a>
+              <a class="btn btn-default navbar-btn" href="<?php echo SITE_URL ?>/login.php">Login</a>
             <?php } ?>
           </div>
         </div><!-- .navbar-collapse -->
@@ -110,6 +118,42 @@ if (!empty($the_type)) {
     <div class="stripe">
       <div class="container">
         <p><?php echo $the_title; ?></p>
+        <?php if (is_logged_in()) { ?>
+        <div class="btn-group userdropdown">
+        <div class="btn-group">
+          <a href="<?php echo SITE_URL."user/$u->user_id" ?>" class="btn btn-default"><i class="fa fa-users"></i> <?php echo "$u->user_name_first $u->user_name_last" ?></a>
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-cog"></i>
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="<?php echo SITE_URL."user/$u->user_id" ?>">Profile</a></li>
+            <li><a href="#">Invoices</a></li>
+            <li><a href="#">Payments</a></li>
+            <li><a href="#">Sites</a></li>
+            <li><a href="<?php echo SITE_URL."user/$u->user_id/subs" ?>">Subscriptions</a></li>
+          </ul>
+        </div>
+        <div class="btn-group">
+          <a href="<?php echo SITE_URL."user/$u->user_id" ?>" class="btn btn-default"><i class="fa fa-user"></i> <?php echo "$u->user_name_first $u->user_name_last" ?></a>
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-cog"></i>
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="<?php echo SITE_URL."user/$u->user_id" ?>">Profile</a></li>
+            <li><a href="#">Invoices</a></li>
+            <li><a href="#">Payments</a></li>
+            <li><a href="#">Sites</a></li>
+            <li><a href="<?php echo SITE_URL."user/$u->user_id/subs" ?>">Subscriptions</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="<?php echo SITE_URL."logout.php" ?>">Log Out</a></li>
+          </ul>
+        </div>
+        </div>
+        <?php } ?>
       </div><!-- .container -->
     </div><!-- .fill -->
 

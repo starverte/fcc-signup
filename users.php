@@ -11,10 +11,17 @@
 global $the_title;
 $the_title = 'Profile';
 include_once('header.php');
-$user_id = (int) $_REQUEST['id'];
-$user = user::get_instance($user_id);
-?>
-
+$user_id = $_REQUEST['id'] ?: $_SESSION['user_id'];
+if (!is_logged_in() || ($_SESSION['user_level']<100 && $user_id!==$_REQUEST['id'])) {
+  if ($_REQUEST['subs']) header("Location: ../../login.php?goto=.%2fuser%2f$user_id%2fsubs");
+  else header("Location: ../login.php?goto=.%2fuser%2f$user_id");
+}
+$user = user::get_instance($user_id);?>
+<style type="text/css">
+  a.edit {
+    float:right; margin-top: -3.5em
+  }
+</style>
 <div class="content-area container" id="primary">
   <div class="row">
     <div class="site-content col-xs-12" id="content">
@@ -33,7 +40,11 @@ $user = user::get_instance($user_id);
 
             <div class="shell col-lg-4 col-md-4 col-sm-6">
               <div class="card">
-                <p class="title">About</p>
+                <h2>About</h2>
+                <?php if ($_SESSION['user_id'] === $user_id || $_SESSION['user_level'] > 99) { ?>
+                <a href="./edit/<?php echo $user_id ?>" class="btn btn-default edit" aria-label="Left Align">Edit</a>
+                <?php } ?>
+                <p>Name: <?php echo "$user->user_name_first $user->user_name_last" ?></p>
 
                 <p>Email: <?php echo "<a href='mailto:$user->user_email'>$user->user_email</a>" ?></p>
 
@@ -43,7 +54,7 @@ $user = user::get_instance($user_id);
 
             <div class="shell col-lg-4 col-md-4 col-sm-6">
               <div class="card">
-                <p class="title">Address</p>
+                <h2>Address</h2>
 
                 <p><?php echo $user->user_address ? address::get_instance_pretty($user->user_address) : "$user->user_name_first $user->user_name_last hasn't entered his/her address yet" ?></p>
               </div>
@@ -51,7 +62,9 @@ $user = user::get_instance($user_id);
 
             <div class="shell col-lg-4 col-md-4 col-sm-6">
               <div class="card">
-                <p class="title">Subscriptions</p><?php
+                <h2>Subscriptions</h2>
+                <a href="./<?php echo $user_id ?>/subs" class="btn btn-default edit" aria-label="Left Align">View All</a>
+                <?php
                   function date_sort($a, $b) {
                     if ($a->sub_date_created === $b->sub_date_created) return 0;
                     return ($a->sub_date_created < $b->sub_date_created) ? 1 : -1;
@@ -61,7 +74,8 @@ $user = user::get_instance($user_id);
                   if ($subs) {
                     $len = count($subs);
                     $num = 0;
-                    foreach (array_splice($subs, 0, 3) as $_sub) {
+                    foreach ($subs as $_sub) {
+                      if ($num > 2) break;
                       if ($_sub->sub_status !== 'deleted') {
                         $num += 1;
                         echo '<div class="col-lg-6 col-md-12 col-sm-12">' .
@@ -72,12 +86,6 @@ $user = user::get_instance($user_id);
                     }
                     if ($num % 2 === 0) {echo '<div>';}
                     else echo '<div class="col-lg-6 col-md-12 col-sm-12">';
-                    if ($num<$len) {
-                      echo '<p class="center"><a href="./'.$user_id.'/subs">' . ($len-$num) . ' more ...</a></p></div>';
-                    }
-                    else {
-                      echo '<p class="center"><a href="./'.$user_id.'/subs">More details</a></p></div>';
-                    }
                     echo '<div class="clearfix"><p></p></div>';
                   }
                   else {

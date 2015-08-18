@@ -11,8 +11,11 @@
 global $the_title;
 $the_title = 'Plans';
 include_once('header.php');
+if (!is_logged_in() || $_SESSION['user_level']<100) {
+  header('Location: http://fortcollinscreative.com/');
+} else {
+  $plan = plan::get_instance($_REQUEST['id']);
 ?>
-
 <div class="content-area container" id="primary">
   <div class="row">
     <div class="site-content col-xs-12" id="content">
@@ -66,5 +69,5 @@ include_once('header.php');
   </div><!-- .row -->
 </div><!-- #primary .content-area -->
 
-<?php include_once('footer.php'); ?>
-
+<?php include_once('footer.php');
+}
