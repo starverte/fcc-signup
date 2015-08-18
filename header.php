@@ -123,7 +123,7 @@ if (!empty($the_type)) {
         <div class="btn-group">
           <a href="<?php echo SITE_URL."user/$u->user_id" ?>" class="btn btn-default"><i class="fa fa-users"></i> <?php echo "$u->user_name_first $u->user_name_last" ?></a>
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-cog"></i>
+            <i class="fa fa-cogs"></i>
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
           </button>
