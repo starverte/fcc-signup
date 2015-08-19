@@ -1,4 +1,6 @@
 .htaccess
 config.php
+docs
+node_modules
 *swp
 
