@@ -92,6 +92,14 @@ $user = user::get_instance($user_id);?>
                     echo "<p>$user->user_name_first $user->user_name_last has no subscriptions.</p>";
                   }}
                   else {
+                    /**
+                     * Sort by date, with the deleted ones at the end, with usort()
+                     *
+                     * Return 1 if $a goes after $b, and -1 otherwise
+                     *
+                     * @param subscription $a The first subscription
+                     * @param subscription $b The second subscription
+                     */
                     function date_sort($a, $b) {
                       if ($a->sub_date_created === $b->sub_date_created) return 0;
                       return (strtotime($a->sub_date_created) < strtotime($b->sub_date_created)) || ($a->sub_status === 'deleted' && $b->sub_status !== 'deleted') ? 1 : -1;

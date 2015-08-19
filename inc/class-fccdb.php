@@ -20,6 +20,7 @@ class fccdb {
    * @param string $dbuser     The user connecting to the database
    * @param string $dbpassword The password for the user connecting to the database
    * @param string $dbhost     The host of the database (i.e. 'localhost')
+   * @param string $dbname     The name of the database
    *
    * @return object PHP Data Object
    *

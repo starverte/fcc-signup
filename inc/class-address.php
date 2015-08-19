@@ -170,11 +170,9 @@ class Address {
    *
    * @return void
    *
-   * @var int $addr_id The primary key of the Address being registered, as created in Address database
-   *
-   * @todo Test
+   * @todo Change variable names to match addresses table
    */
-  public static function new_instance( $addr_name, $addr_cost = null, $Address_description = null ) {
+  public static function new_instance( $addr_name, $addr_cost = null, $addr_desc = null ) {
     global $fccdb;
 
     $addr_name  = _text( $addr_name, 32 );

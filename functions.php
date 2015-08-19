@@ -92,6 +92,18 @@ function _class($unfiltered) {
   }
 }
 
+/**
+ * Validates that a foreign key is correct
+ *
+ * @since 0.0.3
+ *
+ *
+ * @param string $input The key to be validated
+ * @param string $table The table to check
+ * @param string $match The column to check (e.g. sub_id)
+ * @return bool
+ *
+ */
 function fcc_validate_fk($input, $table, $match) {
   global $fccdb;
 
@@ -111,6 +123,16 @@ function fcc_validate_fk($input, $table, $match) {
   }
 }
 
+/**
+ * Rounds a dollar amount to cents
+ *
+ * @since 0.0.3
+ *
+ *
+ * @param string $input The string to be validated
+ * @return float
+ *
+ */
 function fcc_validate_dollars($input) {
   return round(floatval($input),2);
 }

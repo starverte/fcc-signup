@@ -94,6 +94,21 @@ class User {
     }
   }
 
+
+  /**
+   * Check if there is a user with that email + password
+   *
+   * Return user if correct password, false otherwise.
+   *
+   * @since 0.0.4
+   *
+   * @uses fccdb::connect()
+   * @throws PDOException if connection or query cannot execute
+   *
+   * @param  string $mail  The email to be checked
+   * @param  string $pw    The password to be checked
+   * @return object or false
+   */
   public static function login($mail, $pw) {
     global $fccdb;
 
@@ -152,7 +167,7 @@ class User {
    *
    * @todo Test
    */
-  public static function new_instance( $user_name, $user_cost = null, $user_description = null ) {
+  public static function new_instance( $user_name, $user_cost = null, $user_desc = null ) {
     global $fccdb;
 
     $user_name  = _text( $user_name, 32 );
@@ -172,10 +187,13 @@ class User {
    * @uses fccdb::insert()
    * @uses _text()
    *
-   * @param int    $user_id      The ID of the User to update
-   * @param string $user_name    The name of the User
-   * @param float $user_cost      The variable cost of the User
-   * @param string $user_desc    The description of the User
+   * @param int    $user_id         The ID of the User to update
+   * @param string $user_email      The email of the user
+   * @param string $user_name_first The user's first name
+   * @param string $user_name_last  The user's last name
+   * @param int    $user_address    The ID of the address of the user
+   * @param string $user_company    Where the user works
+   * @param int    $user_level      The level of the user (10 = default, 100 = admin)
    *
    * @return void
    *
