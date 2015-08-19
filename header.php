@@ -120,23 +120,24 @@ if (!empty($the_type)) {
         <p><?php echo $the_title; ?></p>
         <?php if (is_logged_in()) { ?>
         <div class="btn-group userdropdown">
+        <?php if ($the_title==='Profile' && $_REQUEST['id']!=$_SESSION['user_id']) { $a = user::get_instance($_REQUEST['id']) ?>
+          <div class="btn-group">
+            <a href="<?php echo SITE_URL."user/$a->user_id" ?>" class="btn btn-default"><i class="fa fa-users"></i> <?php echo "$a->user_name_first $a->user_name_last" ?></a>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cogs"></i>
+              <span class="caret"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="<?php echo SITE_URL."user/$a->user_id" ?>">Profile</a></li>
+              <li><a href="#">Invoices</a></li>
+              <li><a href="#">Payments</a></li>
+              <li><a href="#">Sites</a></li>
+              <li><a href="<?php echo SITE_URL."user/$a->user_id/subs" ?>">Subscriptions</a></li>
+            </ul>
+          </div> <?php } ?>
         <div class="btn-group">
-          <a href="<?php echo SITE_URL."user/$u->user_id" ?>" class="btn btn-default"><i class="fa fa-users"></i> <?php echo "$u->user_name_first $u->user_name_last" ?></a>
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-cogs"></i>
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href="<?php echo SITE_URL."user/$u->user_id" ?>">Profile</a></li>
-            <li><a href="#">Invoices</a></li>
-            <li><a href="#">Payments</a></li>
-            <li><a href="#">Sites</a></li>
-            <li><a href="<?php echo SITE_URL."user/$u->user_id/subs" ?>">Subscriptions</a></li>
-          </ul>
-        </div>
-        <div class="btn-group">
-          <a href="<?php echo SITE_URL."user/$u->user_id" ?>" class="btn btn-default"><i class="fa fa-user"></i> <?php echo "$u->user_name_first $u->user_name_last" ?></a>
+          <a href="<?php echo SITE_URL."user/$u->user_id" ?>" class="btn btn-default"><i class="fa fa-user"></i> <?php echo "$u->user_name_first $u->user_name_last"; ?></a>
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-cog"></i>
             <span class="caret"></span>
@@ -156,4 +157,3 @@ if (!empty($the_type)) {
         <?php } ?>
       </div><!-- .container -->
     </div><!-- .fill -->
-
