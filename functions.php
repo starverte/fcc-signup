@@ -6,18 +6,18 @@
  */
 
 /**
- * Sanitize text input and trim to size
+ * Sanitize text
  *
- * First, make sure only numbers and letters are used.
+ * First, use FILTER_SANITIZE_STRING to filter raw input
  * Next, if length is specificied, trim to length.
  *
- * @param  string $text The string to sanitize
+ * @param  string $unfiltered The unfiltered text
  * @param  int    $length The length of the string
  * @return string
  * @var    string $new The sanitized string
  */
-function _text( $text, $length = 0 ) {
-  $new = preg_replace( '[^0-9a-fA-F]', '', $text);
+function _text( $unfiltered, $length = 0 ) {
+  $new = filter_var( addslashes($unfiltered), FILTER_SANITIZE_STRING ); 
 
   $length = (int) $length;
 
@@ -28,43 +28,36 @@ function _text( $text, $length = 0 ) {
 }
 
 /**
- * Sanitize text input and trim to size
+ * Sanitize email
  *
- * First, make sure only numbers and letters are used.
- * Next, if length is specificied, trim to length.
+ * Use FILTER_SANITIZE_EMAIL to filter raw input
  *
- * @param  string $text The string to sanitize
- * @param  int    $length The length of the string
+ * @param  string $unfiltered The unfiltered email
  * @return string
- * @var    string $new The sanitized string
  */
-function _method( $text ) {
-  $new = preg_replace( '[^0-9a-fA-F]', '', $text);
-  
-  if ('get' === $new || 'set' === $new || 'new' === $new || 'del' === $new) {
-    return $new;
-  }
-  else {
-    return false;
-  }
+function _email($unfiltered) {
+  return filter_var( addslashes($unfiltered), FILTER_SANITIZE_EMAIL ); 
 }
-
 
 /**
- * Sanitize text input and trim to size
+ * Validate method
  *
- * First, make sure only numbers and letters are used.
- * Next, if length is specificied, trim to length.
+ * First, use _text to filter raw input
+ * Next, validate filtered input against methods
  *
- * @param  string $text The string to sanitize
- * @param  int    $length The length of the string
- * @return string
- * @var    string $new The sanitized string
+ * @param  string $unfiltered The unfiltered method
+ * @return mixed
+ * @var    string $new The filtered method
  */
-function _class( $text ) {
-  $new = preg_replace( '[^0-9a-fA-F]', '', $text);
+function _method($unfiltered) {
+  $new = _text($unfiltered);
   
-  if ('extra' === $new || 'plan' === $new || 'site' === $new || 'subscription' === $new || 'user' === $new) {
+  if (
+    'get' === $new ||
+    'set' === $new ||
+    'new' === $new ||
+    'del' === $new
+  ) {
     return $new;
   }
   else {
@@ -72,8 +65,46 @@ function _class( $text ) {
   }
 }
 
-function fcc_validate_fk($input, $table, $match)
-{
+/**
+ * Validate class
+ *
+ * First, use _text to filter raw input
+ * Next, validate filtered input against classes
+ *
+ * @param  string $unfiltered The unfiltered class
+ * @return mixed
+ * @var    string $new The filtered class
+ */
+function _class($unfiltered) {
+  $new = _text($unfiltered);
+  
+  if (
+    'extra' === $new ||
+    'plan' === $new ||
+    'site' === $new ||
+    'subscription' === $new ||
+    'user' === $new
+  ) {
+    return $new;
+  }
+  else {
+    return false;
+  }
+}
+
+/**
+ * Validates that a foreign key is correct
+ *
+ * @since 0.0.3
+ *
+ *
+ * @param string $input The key to be validated
+ * @param string $table The table to check
+ * @param string $match The column to check (e.g. sub_id)
+ * @return bool
+ *
+ */
+function fcc_validate_fk($input, $table, $match) {
   global $fccdb;
 
   $input = (int) $input;
@@ -92,8 +123,17 @@ function fcc_validate_fk($input, $table, $match)
   }
 }
 
-function fcc_validate_dollars($input)
-{
+/**
+ * Rounds a dollar amount to cents
+ *
+ * @since 0.0.3
+ *
+ *
+ * @param string $input The string to be validated
+ * @return float
+ *
+ */
+function fcc_validate_dollars($input) {
   return round(floatval($input),2);
 }
 
@@ -114,11 +154,8 @@ function is_logged_in() {
   if (!empty($_SESSION['user_id'])) {
     global $edb;
     $user_id = (int) $_SESSION['user_id'];
-    $_user = get_user($user_id);
-    if (!empty($_user))
-      return true;
-    else
-      return false;
+    $_user = user::get_instance($user_id);
+    return !empty($_user);
   }
   else {
     return false;

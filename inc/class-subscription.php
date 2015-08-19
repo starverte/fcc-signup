@@ -130,6 +130,18 @@ class subscription {
     return new subscription ( $_subscription );
   }
 
+  /**
+   * Get subscription information from database
+   *
+   * Prepare and execute query to select subscription from database
+   *
+   *
+   * @uses self::query()
+   *
+   * @param  int    $user_id The primary key of the user to find subscriptions for
+   * @return object         Data retrieved from database
+   * @var    string $conn   The PHP Data Object for the connection
+   */
   public static function get_by_user( $user_id )
   {
     global $fccdb;
@@ -159,9 +171,11 @@ class subscription {
    * @uses fccdb::lastInsertId()
    * @uses _text()
    *
-   * @param string $sub_name  The name of the subscription
-   * @param float $sub_cost    The variable cost of the subscription
-   * @param string $sub_desc    The description of the subscription
+   * @param int    $sub_plan    The ID of the plan for this subscription
+   * @param int    $sub_user    The ID of the user that own this subscription
+   * @param float  $sub_balance The balance of the subscription
+   * @param string $sub_status  The status of the subscription
+   * @param string $sub_pmt_schedule   The payment schedule for this subscription
    *
    * @return void
    *
@@ -193,9 +207,11 @@ class subscription {
    * @uses _text()
    *
    * @param int    $sub_id      The ID of the subscription to update
-   * @param string $sub_name    The name of the subscription
-   * @param float  $sub_cost    The variable cost of the subscription
-   * @param string $sub_desc    The description of the subscription
+   * @param int    $sub_plan    The ID of the plan for this subscription
+   * @param int    $sub_user    The ID of the user that own this subscription
+   * @param float  $sub_balance The balance of the subscription
+   * @param string $sub_status  The status of the subscription
+   * @param string $sub_pmt_schedule   The payment schedule for this subscription
    *
    * @return void
    *

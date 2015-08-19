@@ -126,7 +126,7 @@ class Extra {
    *
    * @todo Test
    */
-  public static function new_instance( $extr_name, $extr_cost = null, $extra_description = null ) {
+  public static function new_instance( $extr_name, $extr_cost = null, $extr_desc = null ) {
     global $fccdb;
 
     $extr_name  = _text( $extr_name, 32 );

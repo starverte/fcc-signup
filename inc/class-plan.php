@@ -133,9 +133,9 @@ class Plan {
    *
    * @var int $plan_id The primary key of the Plan being registered, as created in Plan database
    *
-   * @todo Test
+   * @todo Update variables to match plans table
    */
-  public static function new_instance( $plan_name, $plan_cost = null, $Plan_description = null ) {
+  public static function new_instance( $plan_name, $plan_cost = null, $plan_desc = null ) {
     global $fccdb;
 
     $plan_name  = _text( $plan_name, 32 );

@@ -36,6 +36,11 @@ class User {
   public $user_name_last = '';
 
   /**
+   * @var float $user_cost The last name of the User
+   */
+  public $user_level = 10;
+
+  /**
    * Construct User object
    *
    * Takes PDO and constructs User class
@@ -89,6 +94,21 @@ class User {
     }
   }
 
+
+  /**
+   * Check if there is a user with that email + password
+   *
+   * Return user if correct password, false otherwise.
+   *
+   * @since 0.0.4
+   *
+   * @uses fccdb::connect()
+   * @throws PDOException if connection or query cannot execute
+   *
+   * @param  string $mail  The email to be checked
+   * @param  string $pw    The password to be checked
+   * @return object or false
+   */
   public static function login($mail, $pw) {
     global $fccdb;
 
@@ -96,8 +116,8 @@ class User {
     $pw = _text($pw);
 
     $q = self::query("SELECT * FROM users WHERE user_email = '$mail' AND user_password = '$pw' ORDER BY user_id DESC LIMIT 1");
-
-    return new User ($q) ?: false;
+    $u = new User ($q);
+    return $u->user_id ? $u : false;
   }
 
 
@@ -147,7 +167,7 @@ class User {
    *
    * @todo Test
    */
-  public static function new_instance( $user_name, $user_cost = null, $user_description = null ) {
+  public static function new_instance( $user_name, $user_cost = null, $user_desc = null ) {
     global $fccdb;
 
     $user_name  = _text( $user_name, 32 );
@@ -167,10 +187,13 @@ class User {
    * @uses fccdb::insert()
    * @uses _text()
    *
-   * @param int    $user_id      The ID of the User to update
-   * @param string $user_name    The name of the User
-   * @param float $user_cost      The variable cost of the User
-   * @param string $user_desc    The description of the User
+   * @param int    $user_id         The ID of the User to update
+   * @param string $user_email      The email of the user
+   * @param string $user_name_first The user's first name
+   * @param string $user_name_last  The user's last name
+   * @param int    $user_address    The ID of the address of the user
+   * @param string $user_company    Where the user works
+   * @param int    $user_level      The level of the user (10 = default, 100 = admin)
    *
    * @return void
    *
@@ -178,17 +201,20 @@ class User {
    *
    * @todo Test
    */
-  public static function set_instance( $user_id, $user_name = null, $user_cost = null, $user_desc = null ) {
+  public static function set_instance( $user_id, $user_email = null, $user_name_first = null, $user_name_last = null, $user_address = null, $user_company = null, $user_level = null) {
     global $fccdb;
 
     $user_id = (int) $user_id;
 
-    $_User = self::get_instance( $user_id );
+    $_user = self::get_instance( $user_id );
 
-    $user_name    = !empty($user_name)  ? _text( $user_name, 32 ) : $_User->user_name;
-    $user_cost      = !empty($user_cost)    ? floatval($user_cost)      : $_User->user_cost;
-    $user_desc    = !empty($user_desc)  ? _text( $user_desc, 32 ) : $_User->user_desc;
-
-    $fccdb->update('Users', 'user_name,user_cost,user_desc', "'$user_name', $user_cost, '$user_desc'", "user_id = $user_id" );
+    $user_email = empty($user_email) ? $_user->user_email : _email($user_email);
+    $user_name_first = empty($user_name_first) ? $_user->user_name_first : _text($user_name_first);
+    $user_name_last = empty($user_name_last) ? $_user->user_name_last : _text($user_name_last);
+    $user_address = empty($user_address) ? $_user->user_address : +($user_address);
+    $user_company = empty($user_company) ? $_user->user_company : _text($user_company);
+    $user_level = empty($user_level) ? 10 : +($user_level);
+    
+    $fccdb->update('users', "user_email = '$user_email',user_name_first = '$user_name_first',user_name_last = '$user_name_last',user_address = $user_address,user_company = '$user_company',user_level = $user_level", "user_id = $user_id" );
   }
 }

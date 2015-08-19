@@ -130,7 +130,7 @@ class site {
    *
    * @todo Test
    */
-  public static function new_instance( $site_name, $site_cost = null, $site_description = null ) {
+  public static function new_instance( $site_name, $site_cost = null, $site_desc = null ) {
     global $fccdb;
 
     $site_name  = _text( $site_name, 32 );
